@@ -9,9 +9,7 @@ class HumiditySensor : public QObject
     Q_PROPERTY(int humidity READ getHumidity NOTIFY humidityChange)
 public:
     explicit HumiditySensor(QObject *parent = nullptr);
-
     int getHumidity() const;
-
     Q_INVOKABLE void generateHumidity();
 
 signals:
