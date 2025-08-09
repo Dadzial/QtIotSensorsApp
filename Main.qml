@@ -43,7 +43,12 @@ ApplicationWindow {
                 icon.height: 40
                 height: parent.height
 
-                onClicked: console.log("Home")
+                onClicked:{
+                    console.log("Home")
+                    stackView.popTo(stackView.initialItem)
+                }
+
+
 
                 background: Item {
                     id: bg
@@ -145,7 +150,6 @@ ApplicationWindow {
                 background:Rectangle{
                     radius: 10
                     color: "#151D2D"
-
                 }
 
                 contentItem: Row {

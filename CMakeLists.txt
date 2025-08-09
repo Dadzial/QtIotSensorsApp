@@ -30,6 +30,8 @@ qt_add_qml_module(appIotAppSensors
     RESOURCES icons/signal_icon.svg
     RESOURCES icons/temperature.png icons/humidity.png
     RESOURCES fonts/Inter_28pt-Light.ttf
+    QML_FILES HumidityPage.qml
+    QML_FILES TemperaturePage.qml
 )
 
 set_target_properties(appIotAppSensors PROPERTIES
