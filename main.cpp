@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <HumiditySensor.h>
 #include <TemperatureSensor.h>
+#include <QQmlContext>
 
 int main(int argc, char *argv[])
 {

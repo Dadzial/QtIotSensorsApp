@@ -13,7 +13,7 @@ TemperatureSensor::TemperatureSensor(QObject *parent): QObject{parent}, m_temp(0
 
 int TemperatureSensor::getTemp() const
 {
-    return my_temp;
+    return m_temp;
 }
 
 void TemperatureSensor::generateTemperature()

@@ -22,6 +22,12 @@ qt_add_qml_module(appIotAppSensors
     QML_FILES Main.qml
     SOURCES HumiditySensor.h HumiditySensor.cpp
     SOURCES TemperatureSensor.h TemperatureSensor.cpp
+    RESOURCES
+    RESOURCES icons/bxs_home.png
+    RESOURCES
+    RESOURCES
+    RESOURCES icons/material-symbols_settings.png
+    RESOURCES icons/signal_icon.svg
 )
 
 set_target_properties(appIotAppSensors PROPERTIES

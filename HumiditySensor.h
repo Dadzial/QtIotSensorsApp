@@ -1,6 +1,6 @@
 #ifndef HUMIDITYSENSOR_H
 #define HUMIDITYSENSOR_H
-
+#include "qtimer.h"
 #include <QObject>
 
 class HumiditySensor : public QObject
@@ -18,6 +18,7 @@ private slots:
     void onHumidityChange(int humidity);
 private:
     int m_humidity = 0;
+    QTimer *timer;
 };
 
 #endif // HUMIDITYSENSOR_H

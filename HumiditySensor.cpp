@@ -7,7 +7,7 @@ HumiditySensor::HumiditySensor(QObject *parent): QObject{parent}, m_humidity(0)
 {
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &HumiditySensor::generateHumidity);
-    timer->start(1000);
+    timer->start(2000);
     connect(this, &HumiditySensor::humidityChange, this, &HumiditySensor::onHumidityChange);
 }
 

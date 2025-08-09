@@ -1,6 +1,6 @@
 #ifndef TEMPERATURESENSOR_H
 #define TEMPERATURESENSOR_H
-
+#include <qtimer.h>
 #include <QObject>
 
 class TemperatureSensor : public QObject
@@ -18,6 +18,7 @@ private slots:
     void onTemperatureChange(int temperature);
 private:
     int m_temp=0;
+    QTimer *timer;
 };
 
 #endif // TEMPERATURESENSOR_H
