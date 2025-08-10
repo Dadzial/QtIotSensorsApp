@@ -5,6 +5,7 @@ project(IotAppSensors VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core Sql REQUIRED)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
@@ -33,6 +34,7 @@ qt_add_qml_module(appIotAppSensors
     QML_FILES HumidityPage.qml
     QML_FILES TemperaturePage.qml
     QML_FILES HomePage.qml
+    SOURCES DataBaseManager.h DataBaseManager.cpp
 )
 
 set_target_properties(appIotAppSensors PROPERTIES
@@ -43,6 +45,7 @@ set_target_properties(appIotAppSensors PROPERTIES
 )
 
 target_link_libraries(appIotAppSensors PRIVATE Qt6::Core Qt6::Quick)
+target_link_libraries(appIotAppSensors PRIVATE Qt6::Core Qt6::Sql)
 target_link_libraries(appIotAppSensors PRIVATE Qt6::Core)
 target_link_libraries(appIotAppSensors PRIVATE Qt6::Core)
 

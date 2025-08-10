@@ -2,17 +2,27 @@
 #include <QQmlApplicationEngine>
 #include <HumiditySensor.h>
 #include <TemperatureSensor.h>
+#include <DataBaseManager.h>
 #include <QQmlContext>
-
+#include <QDebug>
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     TemperatureSensor tempSensor;
     HumiditySensor humiditySensor;
+    DataBaseManager dbManager;
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("tempSensor", &tempSensor);
     engine.rootContext()->setContextProperty("humiditySensor", &humiditySensor);
+
+    if (!dbManager.openDataBase("sensors_dataBase.sqlite")) {
+        qWarning() << "Nie udało się otworzyć bazy danych";
+        return -1;
+    } else {
+        qDebug() << "Baza danych otwarta poprawnie";
+    }
+
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
