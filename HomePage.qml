@@ -1,10 +1,18 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import Qt5Compat.GraphicalEffects
 
 Item {
-
+    id: root
     property StackView stackView
+    property int humidity: 0
+    property int maxHumidity: 100
+
+    FontLoader {
+        id: myInter
+        source: "./fonts/Inter_28pt-Light.ttf"
+    }
 
     Label {
         id: labelHome
@@ -17,13 +25,8 @@ Item {
         font.family: myInter.name
     }
 
-    FontLoader{
-        id: myInter
-        source: "./fonts/Inter_28pt-Light.ttf"
-    }
-
     Rectangle {
-        id:divider
+        id: divider
         anchors.top: labelHome.bottom
         anchors.topMargin: 2
         anchors.left: parent.left
@@ -33,8 +36,8 @@ Item {
         opacity: 0.2
     }
 
-    Grid{
-        id:buttonGrid
+    Grid {
+        id: buttonGrid
         columns: 4
         spacing: 15
         anchors.top: divider.top
@@ -42,18 +45,22 @@ Item {
         anchors.leftMargin: 7
         anchors.topMargin: 16
 
-
         Repeater {
-            model: [
-                { text: "Temperature", icon : "./icons/temperature.png" , page: "TemperaturePage.qml"},
-                { text: "Humidity", icon : "./icons/humidity.png" , page: "HumidityPage.qml"}
-            ]
+            model: [{
+                    "text": "Temperature",
+                    "icon": "./icons/temperature.png",
+                    "page": "TemperaturePage.qml"
+                }, {
+                    "text": "Humidity",
+                    "icon": "./icons/humidity.png",
+                    "page": "HumidityPage.qml"
+                }]
 
             delegate: Button {
                 width: 150
                 height: 50
 
-                background:Rectangle{
+                background: Rectangle {
                     radius: 10
                     color: "#151D2D"
                 }
@@ -85,7 +92,10 @@ Item {
                 property real hoverOffset: -4
 
                 Behavior on y {
-                    NumberAnimation { duration: 150; easing.type: Easing.InOutQuad }
+                    NumberAnimation {
+                        duration: 150
+                        easing.type: Easing.InOutQuad
+                    }
                 }
 
                 hoverEnabled: true
@@ -94,8 +104,10 @@ Item {
                 }
                 onClicked: {
                     var sv = parent
-                    while (sv && !sv.push) sv = sv.parent
-                    if (sv) sv.push(modelData.page)
+                    while (sv && !sv.push)
+                        sv = sv.parent
+                    if (sv)
+                        sv.push(modelData.page)
                 }
             }
         }

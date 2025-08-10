@@ -27,7 +27,7 @@ void TemperatureSensor::generateTemperature()
 
 void TemperatureSensor::onTemperatureChange(int temperature)
 {
-    qDebug() << "Humidity is change:" << temperature;
+    qDebug() << "Temperature is change:" << temperature;
 }
 
 
