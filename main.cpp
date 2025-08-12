@@ -8,6 +8,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
     TemperatureSensor tempSensor;
     HumiditySensor humiditySensor;
     DataBaseManager dbManager;
@@ -17,10 +18,10 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("humiditySensor", &humiditySensor);
 
     if (!dbManager.openDataBase("sensors_dataBase.sqlite")) {
-        qWarning() << "Nie udało się otworzyć bazy danych";
+        qWarning() << "Not Connected";
         return -1;
     } else {
-        qDebug() << "Baza danych otwarta poprawnie";
+        qDebug() << "Connected";
     }
 
     QObject::connect(
