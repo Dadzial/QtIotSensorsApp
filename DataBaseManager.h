@@ -11,6 +11,9 @@ public:
     ~DataBaseManager();
 
     bool openDataBase(const QString &path);
+    bool createTemperatureTable();
+    bool insertTempData(const QString &temp);
+    bool deleteTempData();
     void closeDataBase();
 
 private:

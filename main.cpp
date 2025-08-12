@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("tempSensor", &tempSensor);
     engine.rootContext()->setContextProperty("humiditySensor", &humiditySensor);
+    engine.rootContext()->setContextProperty("dbManager",&dbManager);
 
     if (!dbManager.openDataBase("sensors_dataBase.sqlite")) {
         qWarning() << "Not Connected";

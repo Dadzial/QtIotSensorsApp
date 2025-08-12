@@ -168,8 +168,55 @@ Item {
                     Layout.fillHeight: true
                     color: "white"
                     radius: 20
-                }
 
+                    Column {
+                        anchors.fill: parent
+                        anchors.margins: 15
+                        spacing: 15
+
+                        Item {
+                            id: labelWrapperHistory
+                            width: parent.width
+                            height: labelHistory.implicitHeight
+
+                            Label {
+                                id: labelHistory
+                                text: "Current Temperature :"
+                                font.pixelSize: 20
+                                font.family: myInter.name
+                                color: "#151D2D"
+                                horizontalAlignment: Text.AlignHCenter
+                                anchors.fill: parent
+
+                            }
+
+                            DropShadow {
+                                anchors.fill: labelHistory
+                                source: labelHistory
+                                horizontalOffset: 1
+                                verticalOffset: 1
+                                radius: 4
+                                samples: 16
+                                color: "#80000000"
+                            }
+                        }
+
+                        ScrollView {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: labelWrapperHistory.bottom
+                            anchors.bottom: parent.bottom
+                            clip: true
+
+                            Column {
+                                width: parent.width
+                                spacing: 8
+
+                                //wpisy tutaj
+                            }
+                        }
+                    }
+                }
                 Rectangle {
                     id:tempAlarm
                     Layout.fillWidth: true
