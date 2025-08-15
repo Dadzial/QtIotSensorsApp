@@ -20,6 +20,14 @@ public:
     Q_INVOKABLE bool deleteAlarmsData();
     Q_INVOKABLE QStringListModel* AlarmsModel();
 
+    Q_INVOKABLE QStringList getHumidityHistory();
+    Q_INVOKABLE bool deleteHumidtyData();
+    Q_INVOKABLE QStringListModel* HumidityModel();
+
+    Q_INVOKABLE QStringList getHumidityAlarmHistory();
+    Q_INVOKABLE bool deleteHumidtyAlarmData();
+    Q_INVOKABLE QStringListModel* HumidityAlarmModel();
+
     bool openDataBase(const QString &path);
 
     bool createTemperatureTable();
@@ -28,19 +36,25 @@ public:
     bool createAlarmsTable();
     bool insertAlarmsData(const QString &alarm);
 
+    bool createHumidityTable();
+    bool insertHumidityData(const QString &humidity);
+
+    bool createHumidityAlarmTable();
+    bool insertHumidityAlarmData(const QString &humidityAlarm);
+
 
     void closeDataBase();
-
-signals:
-    void temperatureHistoryChanged();
-
 private:
     QSqlDatabase db;
     QStringListModel m_temperatureModel;
     QStringListModel m_alarmModel;
+    QStringListModel m_humidityModel;
+    QStringListModel m_humidtyAlarmModel;
 
     void updateTemperatureModel();
     void updateAlarmsModel();
+    void updateHumidityModel();
+    void updateHumidityAlarmModel();
 };
 
 #endif // DATABASEMANAGER_H

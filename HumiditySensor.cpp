@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QRandomGenerator>
 
-HumiditySensor::HumiditySensor(QObject *parent): QObject{parent}, m_humidity(0)
+HumiditySensor::HumiditySensor(QObject *parent , DataBaseManager *dbManager): QObject{parent}, m_humidity(0) ,t_dbManager(dbManager)
 {
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &HumiditySensor::generateHumidity);
@@ -28,4 +28,12 @@ void HumiditySensor::generateHumidity()
 void HumiditySensor::onHumidityChange(int humidity)
 {
     qDebug() << "Humidity is change:" << humidity;
+
+    if(t_dbManager){
+        t_dbManager->insertHumidityData(QString::number(humidity));
+    }
+
+    if(humidity >= 40) {
+        t_dbManager->insertHumidityAlarmData(QString::number(humidity));
+    }
 }

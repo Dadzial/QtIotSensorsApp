@@ -202,7 +202,14 @@ Item {
                                     radius: 20
                                 }
                                 onClicked: {
-                                    //tutaj usuwanie histori wilgotnosci
+                                    if (dbManager.deleteHumidtyData()) {
+                                        console.log("History Alarms deleted")
+                                        root.maxHumidity = 100
+                                        root.animatedHumidity = 0
+                                        root.humidity = 0
+                                    } else {
+                                        console.log("Failed to delete history")
+                                    }
                                 }
                             }
                             DropShadow {
@@ -215,17 +222,32 @@ Item {
                                 color: "#80000000"
                             }
                         }
-                        ScrollView{
+                        ListView {
                             width: parent.width
-                            height: parent.height -50
-                            clip: true
+                            height: parent.height
+                            model: humidityModel
 
-                            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+                            delegate: Column {
+                                width: ListView.view.width
 
-                            ListView {
-                                width: parent.width
-                                height: parent.height
-                                //tutaj model
+                                Text {
+                                    text: model.display
+                                    font.pixelSize: 21
+                                    color: "#151D2D"
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: 10
+                                    font.family: myInter.name
+                                }
+
+                                Rectangle {
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: 15
+                                    height: 1
+                                    width: 430
+                                    color: "#151D2D"
+                                    opacity: 0.5
+                                }
                             }
                         }
                     }
@@ -271,6 +293,16 @@ Item {
                                     color:"#151D2D"
                                     radius:20
                                 }
+                                onClicked: {
+                                    if (dbManager.deleteHumidtyAlarmData()) {
+                                        console.log("History Alarms deleted")
+                                        root.maxHumidity = 100
+                                        root.animatedHumidity = 0
+                                        root.humidity = 0
+                                    } else {
+                                        console.log("Failed to delete history")
+                                    }
+                                }
                             }
 
                             DropShadow {
@@ -293,7 +325,8 @@ Item {
                             ListView {
                                 width: parent.width
                                 height: parent.height
-                                model: blank //tu bedzie nowy model !!!
+                                model :humidityAlarmModel
+
 
                                 delegate: Column {
                                     width: ListView.view.width
