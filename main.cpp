@@ -5,25 +5,31 @@
 #include <DataBaseManager.h>
 #include <QQmlContext>
 #include <QDebug>
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    TemperatureSensor tempSensor;
-    HumiditySensor humiditySensor;
     DataBaseManager dbManager;
-
-    QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("tempSensor", &tempSensor);
-    engine.rootContext()->setContextProperty("humiditySensor", &humiditySensor);
-    engine.rootContext()->setContextProperty("dbManager",&dbManager);
-
     if (!dbManager.openDataBase("sensors_dataBase.sqlite")) {
         qWarning() << "Not Connected";
         return -1;
     } else {
         qDebug() << "Connected";
     }
+    dbManager.createTemperatureTable();
+    dbManager.createAlarmsTable();
+
+    TemperatureSensor tempSensor(nullptr, &dbManager);
+    HumiditySensor humiditySensor;
+
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("tempSensor", &tempSensor);
+    engine.rootContext()->setContextProperty("humiditySensor", &humiditySensor);
+    engine.rootContext()->setContextProperty("temperatureModel", dbManager.temperatureModel());
+    engine.rootContext()->setContextProperty("alarmsModel", dbManager.AlarmsModel());
+    engine.rootContext()->setContextProperty("dbManager", &dbManager);
+
 
     QObject::connect(
         &engine,

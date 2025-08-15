@@ -87,7 +87,6 @@ Item {
                             horizontalAlignment: Text.AlignHCenter
                             anchors.fill: parent
                         }
-
                         DropShadow {
                             anchors.fill: labelTemp2
                             source: labelTemp2
@@ -135,7 +134,6 @@ Item {
                                 ctx.fillText(Math.round(root.animatedTemperature) + "°C", centerX, centerY);
                             }
                         }
-
                         DropShadow {
                             anchors.fill: wheelTemperature
                             source: wheelTemperature
@@ -143,12 +141,35 @@ Item {
                             verticalOffset: 2
                             radius: 8
                             samples: 16
-                            color: "#44000000"
+                            color:ListView {
+                                width: parent.width
+                                height: parent.height
+                                model: temperatureModel
+
+                                delegate: Column {
+                                    width: ListView.view.width
+
+                                    Text {
+                                        text: model.display
+                                        font.pixelSize: 24
+                                        color: "#151D2D"
+                                        anchors.left: parent.left
+                                        anchors.leftMargin: 10
+                                    }
+
+                                    Rectangle {
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        height: 1
+                                        color: "white"
+                                        opacity: 0.2
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
-
             NumberAnimation {
                 id: animTemperature
                 target: root
@@ -177,19 +198,43 @@ Item {
                         Item {
                             id: labelWrapperHistory
                             width: parent.width
-                            height: labelHistory.implicitHeight
+                            height: 40
 
                             Label {
                                 id: labelHistory
-                                text: "Current Temperature :"
+                                text: "History :"
                                 font.pixelSize: 20
                                 font.family: myInter.name
                                 color: "#151D2D"
-                                horizontalAlignment: Text.AlignHCenter
-                                anchors.fill: parent
-
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left
+                                anchors.leftMargin: 10
                             }
 
+                            Button {
+                                text: "Delete History"
+                                height: 35
+                                width: 130
+                                font.pixelSize: 16
+                                font.family: myInter.name
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.right: parent.right
+                                background: Rectangle {
+                                    color:"#151D2D"
+                                    radius:20
+                                }
+                                onClicked: {
+                                    if (dbManager.deleteTempData()) {
+                                        console.log("History deleted")
+                                        root.maxTemperature = 100
+                                        root.animatedTemperature = 0
+                                        root.temperature = 0
+                                        wheelTemperature.requestPaint()
+                                    } else {
+                                        console.log("Failed to delete history")
+                                    }
+                                }
+                            }
                             DropShadow {
                                 anchors.fill: labelHistory
                                 source: labelHistory
@@ -202,17 +247,39 @@ Item {
                         }
 
                         ScrollView {
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.top: labelWrapperHistory.bottom
-                            anchors.bottom: parent.bottom
+                            width: parent.width
+                            height: parent.height - 50
                             clip: true
 
-                            Column {
-                                width: parent.width
-                                spacing: 8
+                            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
 
-                                //wpisy tutaj
+                            ListView {
+                                width: parent.width
+                                height: parent.height
+                                model: temperatureModel
+
+                                delegate: Column {
+                                    width: ListView.view.width
+
+                                    Text {
+                                        text: model.display
+                                        font.pixelSize: 21
+                                        color: "#151D2D"
+                                        anchors.left: parent.left
+                                        anchors.leftMargin: 10
+                                        font.family: myInter.name
+                                    }
+
+                                    Rectangle {
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        anchors.rightMargin: 15
+                                        height: 1
+                                        width: 430
+                                        color: "#151D2D"
+                                        opacity: 0.5
+                                    }
+                                }
                             }
                         }
                     }
@@ -223,6 +290,103 @@ Item {
                     Layout.fillHeight: true
                     color: "white"
                     radius: 20
+
+                    Column {
+                        anchors.fill: parent
+                        anchors.margins: 15
+                        spacing: 15
+
+                        Item {
+                            id: labelWrapperAlarm
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            height: 40
+
+                            Label {
+                                id: labelAlarm
+                                text: "Alarms :"
+                                font.pixelSize: 20
+                                font.family: myInter.name
+                                color: "#151D2D"
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left
+                                anchors.leftMargin: 10
+                            }
+
+                            Button {
+                                text: "Delete Alarms"
+                                height: 35
+                                width: 130
+                                font.pixelSize: 16
+                                font.family: myInter.name
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.right: parent.right
+                                background: Rectangle {
+                                    color:"#151D2D"
+                                    radius:20
+                                }
+                                onClicked: {
+                                    onClicked: {
+                                        if (dbManager.deleteAlarmsData()) {
+                                            console.log("History Alarms deleted")
+                                            root.maxTemperature = 100
+                                            root.animatedTemperature = 0
+                                            root.temperature = 0
+                                        } else {
+                                            console.log("Failed to delete history")
+                                        }
+                                    }
+                                }
+                            }
+
+                            DropShadow {
+                                anchors.fill: labelAlarm
+                                source: labelAlarm
+                                horizontalOffset: 1
+                                verticalOffset: 1
+                                radius: 4
+                                samples: 16
+                                color: "#80000000"
+                            }
+                        }
+
+                        ScrollView {
+                            width: parent.width
+                            height: parent.height - 50
+                            clip: true
+
+                            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+
+                            ListView {
+                                width: parent.width
+                                height: parent.height
+                                model: alarmsModel
+
+                                delegate: Column {
+                                    width: ListView.view.width
+
+                                    Text {
+                                        text: model.display
+                                        font.pixelSize: 21
+                                        color: "#151D2D"
+                                        anchors.left: parent.left
+                                        anchors.leftMargin: 10
+                                        font.family: myInter.name
+                                    }
+
+                                    Rectangle {
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        anchors.rightMargin: 15
+                                        height: 1
+                                        width: 430
+                                        color: "#151D2D"
+                                        opacity: 0.5
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -232,6 +396,12 @@ Item {
         target: tempSensor
         function onTempChange(newTemperature) {
             root.temperature = newTemperature
+
+
+            if (newTemperature > root.maxTemperature) {
+                root.maxTemperature = newTemperature
+            }
+
             animTemperature.to = newTemperature
             animTemperature.start()
         }

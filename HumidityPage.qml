@@ -168,14 +168,158 @@ Item {
                     Layout.fillHeight: true
                     color: "white"
                     radius: 20
-                }
 
+                    Column {
+                        anchors.fill: parent
+                        anchors.margins: 15
+                        spacing: 15
+
+                        Item{
+                            id: labelWrapperHistory
+                            width: parent.width
+                            height: 40
+
+                            Label {
+                                id:labelHistory
+                                text: "History :"
+                                font.pixelSize: 20
+                                font.family: myInter.name
+                                color: "#151D2D"
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left
+                                anchors.leftMargin: 10
+                            }
+                            Button {
+                                text:"Delete History"
+                                height: 35
+                                width: 130
+                                font.pixelSize: 16
+                                font.family: myInter.name
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.right: parent.right
+                                background: Rectangle {
+                                    color:"#151D2D"
+                                    radius: 20
+                                }
+                                onClicked: {
+                                    //tutaj usuwanie histori wilgotnosci
+                                }
+                            }
+                            DropShadow {
+                                anchors.fill: labelHistory
+                                source: labelHistory
+                                horizontalOffset: 1
+                                verticalOffset: 1
+                                radius: 4
+                                samples: 16
+                                color: "#80000000"
+                            }
+                        }
+                        ScrollView{
+                            width: parent.width
+                            height: parent.height -50
+                            clip: true
+
+                            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+
+                            ListView {
+                                width: parent.width
+                                height: parent.height
+                                //tutaj model
+                            }
+                        }
+                    }
+                }
                 Rectangle {
                     id: humidityAlarm
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     color: "white"
                     radius: 20
+
+                    Column {
+                        anchors.fill: parent
+                        anchors.margins: 15
+                        spacing: 15
+
+                        Item {
+                            id: labelWrapperAlarm
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            height: 40
+
+                            Label {
+                                id: labelAlarm
+                                text: "Alarms :"
+                                font.pixelSize: 20
+                                font.family: myInter.name
+                                color: "#151D2D"
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.left: parent.left
+                                anchors.leftMargin: 10
+                            }
+
+                            Button {
+                                text: "Delete Alarms"
+                                height: 35
+                                width: 130
+                                font.pixelSize: 16
+                                font.family: myInter.name
+                                anchors.verticalCenter: parent.verticalCenter
+                                anchors.right: parent.right
+                                background: Rectangle {
+                                    color:"#151D2D"
+                                    radius:20
+                                }
+                            }
+
+                            DropShadow {
+                                anchors.fill: labelAlarm
+                                source: labelAlarm
+                                horizontalOffset: 1
+                                verticalOffset: 1
+                                radius: 4
+                                samples: 16
+                                color: "#80000000"
+                            }
+                        }
+                        ScrollView {
+                            width: parent.width
+                            height: parent.height - 50
+                            clip: true
+
+                            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+
+                            ListView {
+                                width: parent.width
+                                height: parent.height
+                                model: blank //tu bedzie nowy model !!!
+
+                                delegate: Column {
+                                    width: ListView.view.width
+
+                                    Text {
+                                        text: model.display
+                                        font.pixelSize: 21
+                                        color: "#151D2D"
+                                        anchors.left: parent.left
+                                        anchors.leftMargin: 10
+                                        font.family: myInter.name
+                                    }
+
+                                    Rectangle {
+                                        anchors.left: parent.left
+                                        anchors.right: parent.right
+                                        anchors.rightMargin: 15
+                                        height: 1
+                                        width: 430
+                                        color: "#151D2D"
+                                        opacity: 0.5
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

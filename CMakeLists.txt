@@ -20,23 +20,23 @@ qt_add_executable(appIotAppSensors
 qt_add_qml_module(appIotAppSensors
     URI IotAppSensors
     VERSION 1.0
-    QML_FILES Main.qml
-    SOURCES HumiditySensor.h HumiditySensor.cpp
-    SOURCES TemperatureSensor.h TemperatureSensor.cpp
+    QML_FILES
+        Main.qml
+        HumidityPage.qml
+        TemperaturePage.qml
+        HomePage.qml
+    SOURCES
+        HumiditySensor.h HumiditySensor.cpp
+        TemperatureSensor.h TemperatureSensor.cpp
+        DataBaseManager.h DataBaseManager.cpp
     RESOURCES
-    RESOURCES icons/bxs_home.png
-    RESOURCES
-    RESOURCES
-    RESOURCES icons/material-symbols_settings.png
-    RESOURCES icons/signal_icon.svg
-    RESOURCES icons/temperature.png icons/humidity.png
-    RESOURCES fonts/Inter_28pt-Light.ttf
-    QML_FILES HumidityPage.qml
-    QML_FILES TemperaturePage.qml
-    QML_FILES HomePage.qml
-    SOURCES DataBaseManager.h DataBaseManager.cpp
+        icons/bxs_home.png
+        icons/material-symbols_settings.png
+        icons/signal_icon.svg
+        icons/temperature.png
+        icons/humidity.png
+        fonts/Inter_28pt-Light.ttf
 )
-
 set_target_properties(appIotAppSensors PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}

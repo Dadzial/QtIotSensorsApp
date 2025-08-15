@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QRandomGenerator>
 
-TemperatureSensor::TemperatureSensor(QObject *parent): QObject{parent}, m_temp(0)
+TemperatureSensor::TemperatureSensor(QObject *parent, DataBaseManager *dbManager) : QObject{parent}, m_temp(0), t_dbManager(dbManager)
 {
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &TemperatureSensor::generateTemperature);
@@ -28,6 +28,13 @@ void TemperatureSensor::generateTemperature()
 void TemperatureSensor::onTemperatureChange(int temperature)
 {
     qDebug() << "Temperature is change:" << temperature;
+    if(t_dbManager){
+        t_dbManager->insertTempData(QString::number(temperature));
+    }
+
+    if(temperature >= 20) {
+        t_dbManager->insertAlarmsData(QString::number(temperature));
+    }
 }
 
 
